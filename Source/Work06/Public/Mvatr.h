@@ -15,10 +15,15 @@ public:
 
 protected:
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Mvatr|Components")
 	USceneComponent* SceneRoot;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mvatr|Components")
 	UStaticMeshComponent* StaticMeshComp;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Mvatr|Properties")
 	float MoveSpeed;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Mvatr|Properties")
 	float RotationSpeed;
 	float MoveRange;
 	FVector StartLocation;
