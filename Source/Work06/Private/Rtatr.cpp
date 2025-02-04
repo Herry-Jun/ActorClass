@@ -25,7 +25,7 @@ ARtatr::ARtatr()
 
 	PrimaryActorTick.bCanEverTick = true;
 
-	RotationSpeed = 100.0f;
+	RotationSpeed = 50.0f;
 
 }
 
@@ -33,8 +33,9 @@ void ARtatr::BeginPlay()
 {
 	Super::BeginPlay();
 
-	SetActorLocation(FVector(0.0f, 0.0f, 70.0f));
-	SetActorScale3D(FVector(1.5f));
+	SetActorLocation(FVector(3000.0f, -3000.0f, 3000.0f));
+	SetActorRotation(FRotator(45.0f, 0.0f, 0.0f));
+	SetActorScale3D(FVector(10.0f));
 
 }
 
@@ -44,11 +45,6 @@ void ARtatr::Tick(float DeltaTime)
 
 	if (!FMath::IsNearlyZero(RotationSpeed))
 	{
-		FRotator NewRotation = GetActorRotation();
-		NewRotation.Pitch += RotationSpeed * DeltaTime;
-		SetActorRotation(NewRotation);
-
+		AddActorLocalRotation(FRotator(0.0f, RotationSpeed * DeltaTime, 0.0f));
 	}
 }
-
-
