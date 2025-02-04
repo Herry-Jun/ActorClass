@@ -1,4 +1,5 @@
 #include "Rtatr.h"
+#include "TimerManager.h"
 
 ARtatr::ARtatr()
 {
@@ -37,6 +38,8 @@ void ARtatr::BeginPlay()
 	SetActorRotation(FRotator(45.0f, 0.0f, 0.0f));
 	SetActorScale3D(FVector(10.0f));
 
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle_HideActor, this, &ARtatr::HideActor, 5.0f, false);
+
 }
 
 void ARtatr::Tick(float DeltaTime)
@@ -47,4 +50,28 @@ void ARtatr::Tick(float DeltaTime)
 	{
 		AddActorLocalRotation(FRotator(0.0f, RotationSpeed * DeltaTime, 0.0f));
 	}
+}
+
+void ARtatr::HideActor()
+{
+	SetActorHiddenInGame(true);
+	SetActorEnableCollision(false);
+
+	FVector NewLocation = FVector(
+		FMath::RandRange(-5000.0f, 5000.0f),
+		FMath::RandRange(-5000.0f, 5000.0f),
+		FMath::RandRange(500.0f, 3000.0f)
+	);
+	SetActorLocation(NewLocation);
+
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle_ShowActor, this, &ARtatr::ShowActor, 1.0f, false);
+}
+
+void ARtatr::ShowActor()
+{
+	SetActorHiddenInGame(false);
+	SetActorEnableCollision(true);
+
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle_HideActor, this, &ARtatr::HideActor, 5.0, false);
+
 }
